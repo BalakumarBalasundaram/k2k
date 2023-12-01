@@ -2,98 +2,104 @@
 
 https://docs.confluent.io/platform/current/multi-dc-deployments/cluster-linking/index.html
 
-Q) What is cluster linking?
+## Q) What is cluster linking?
 
 A) Cluster linking is a feature in Confluent Platform that allows for the replication of data across multiple Apache Kafka clusters. It's designed to be lightweight and have minimal impact on performance. It's useful in scenarios such as multi-datacenter deployments, disaster recovery, and geo-local data presence.
 
-Q) How can I configure cluster linking in Confluent Platform?
-1. Configure the destination cluster:
-   - Set 'confluent.cluster.links.enable' to 'true' in the destination cluster's properties file.
+## Q) How can I configure cluster linking in Confluent Platform?
+   1. Configure the destination cluster:
+      - Set 'confluent.cluster.links.enable' to 'true' in the destination cluster's properties file.
 
-2. Create a cluster link on the source cluster:
-   - Use the 'kafka-cluster-links' command with the 'create' option.
-   - Provide the necessary details like 'link-name', 'bootstrap.servers' of the destination cluster.
+   2. Create a cluster link on the source cluster:
+      - Use the 'kafka-cluster-links' command with the 'create' option.
+      - Provide the necessary details like 'link-name', 'bootstrap.servers' of the destination cluster.
 
-3. Create a MirrorMaker 2.0 replication flow on the source cluster:
-   - Use the 'kafka-mirrormaker' command with the 'create' option.
-   - Provide the necessary details like 'source-cluster', 'target-cluster', 'topics-include'.
+   3. Create a MirrorMaker 2.0 replication flow on the source cluster:
+      - Use the 'kafka-mirrormaker' command with the 'create' option.
+      - Provide the necessary details like 'source-cluster', 'target-cluster', 'topics-include'.
 
 
-Here is a brief pseudocode:
-1. Configure the destination cluster:
-   - Set 'confluent.cluster.links.enable' to 'true' in the destination cluster's properties file.
+   Here is a brief pseudocode:
 
-2. Create a cluster link on the source cluster:
-   - Use the 'kafka-cluster-links' command with the 'create' option.
-   - Provide the necessary details like 'link-name', 'bootstrap.servers' of the destination cluster.
+      1. Configure the destination cluster:
+         - Set 'confluent.cluster.links.enable' to 'true' in the destination cluster's properties file.
 
-3. Create a MirrorMaker 2.0 replication flow on the source cluster:
-   - Use the 'kafka-mirrormaker' command with the 'create' option.
-   - Provide the necessary details like 'source-cluster', 'target-cluster', 'topics-include'.
+      2. Create a cluster link on the source cluster:
+         - Use the 'kafka-cluster-links' command with the 'create' option.
+         - Provide the necessary details like 'link-name', 'bootstrap.servers' of the destination cluster.
 
-Here is the corresponding shell commands:
-# Step 1: Configure the destination cluster
-# Add the following line to the destination cluster's properties file
-confluent.cluster.links.enable=true
+      3. Create a MirrorMaker 2.0 replication flow on the source cluster:
+         - Use the 'kafka-mirrormaker' command with the 'create' option.
+         - Provide the necessary details like 'source-cluster', 'target-cluster', 'topics-include'.
 
-# Step 2: Create a cluster link on the source cluster
-# Replace 'link-name' and 'bootstrap.servers' with your values
-confluent kafka cluster-links create --config bootstrap.servers=<bootstrap.servers> --link-name <link-name>
+   Here is the corresponding shell commands:
 
-# Step 3: Create a MirrorMaker 2.0 replication flow on the source cluster
-# Replace 'source-cluster', 'target-cluster', 'topics-include' with your values
-confluent kafka mirrormaker create --source-cluster <source-cluster> --target-cluster <target-cluster> --topics-include <topics-include>
+      # Step 1: Configure the destination cluster
+      # Add the following line to the destination cluster's properties file
+      confluent.cluster.links.enable=true
 
-Please replace <bootstrap.servers>, <link-name>, <source-cluster>, <target-cluster>, and <topics-include> with your actual values.
+      # Step 2: Create a cluster link on the source cluster
+      # Replace 'link-name' and 'bootstrap.servers' with your values
+      confluent kafka cluster-links create --config bootstrap.servers=<bootstrap.servers> --link-name <link-name>
 
-Next, you might want to verify the cluster linking or start producing and consuming data to test the setup.
+      # Step 3: Create a MirrorMaker 2.0 replication flow on the source cluster
+      # Replace 'source-cluster', 'target-cluster', 'topics-include' with your values
+      confluent kafka mirrormaker create --source-cluster <source-cluster> --target-cluster <target-cluster> --topics-include <topics-include>
 
-Q) How can I verify the status of cluster linking in Confluent Platform?
+      Please replace <bootstrap.servers>, <link-name>, <source-cluster>, <target-cluster>, and <topics-include> with your actual values.
+
+      Next, you might want to verify the cluster linking or start producing and consuming data to test the setup.
+
+## Q) How can I verify the status of cluster linking in Confluent Platform?
 
 To verify the status of cluster linking in Confluent Platform, you can use the describe command with the kafka-cluster-links tool. This will provide information about the cluster link, including its status.
 
-Here is the pseudocode:
-1. Use the 'kafka-cluster-links' command with the 'describe' option.
-2. Provide the 'link-name' as an argument.
+   Here is the pseudocode:
 
-nam
-Here is the corresponding shell command:
-# Replace 'link-name' with your actual link name
-confluent kafka cluster-links describe --link-name <link-name>
+      1. Use the 'kafka-cluster-links' command with the 'describe' option.
+      2. Provide the 'link-name' as an argument.
+
+   
+   Here is the corresponding shell command:
+
+      # Replace 'link-name' with your actual link name
+      confluent kafka cluster-links describe --link-name <link-name>
 
 >
 This command will output the details of the cluster link, including its status. If the link is working correctly, the status should be 'ACTIVE'.
 
 Next, you might want to learn how to troubleshoot if the cluster link is not active or explore other commands related to cluster linking.
 
-# view the installation 
+### view the installation 
 https://www.confluent.io/installation/
 
 
-Q) How can I troubleshoot cluster linking issues in Confluent Platform?
+## Q) How can I troubleshoot cluster linking issues in Confluent Platform?
+
 Troubleshooting cluster linking issues in Confluent Platform can involve several steps. Here's a general approach:
 
 Check the status of the cluster link using the describe command.
 Check the logs of the source and destination clusters for any error messages.
 Verify the network connectivity between the source and destination clusters.
 Ensure that the configurations of the source and destination clusters are correct.
+
 Here is the pseudocode:
 
-1. Use the 'kafka-cluster-links' command with the 'describe' option and the 'link-name' as an argument.
-2. Check the logs of the source and destination clusters.
-3. Verify the network connectivity between the source and destination clusters.
-4. Check the configurations of the source and destination clusters.
+   1. Use the 'kafka-cluster-links' command with the 'describe' option and the 'link-name' as an argument.
+   2. Check the logs of the source and destination clusters.
+   3. Verify the network connectivity between the source and destination clusters.
+   4. Check the configurations of the source and destination clusters.
 
 Here is the corresponding shell command for the first step:
 
-# Replace 'link-name' with your actual link name
+### Replace 'link-name' with your actual link name
 confluent kafka cluster-links describe --link-name <link-name>
 
 For the remaining steps, you would need to manually check the logs, verify network connectivity, and check the configurations.
 
 Next, you might want to learn about common issues and their solutions or explore more advanced troubleshooting techniques.
 
-Q)How can I monitor the performance of cluster linking in Confluent Platform?
+## Q) How can I monitor the performance of cluster linking in Confluent Platform?
 
 Monitoring the performance of cluster linking in Confluent Platform can be done using Confluent Control Center or JMX metrics.
 
@@ -127,4 +133,13 @@ Here is the pseudocode:
 .
 Next, you might want to learn how to manage these alerts or how to integrate them with external alerting systems.
 
+## Q) How can I manage alerts based on the performance metrics of cluster linking in Confluent Platform?
+//TODO
 
+
+
+## Further Reading
+
+- https://docs.confluent.io/platform/current/multi-dc-deployments/cluster-linking/migrate-cp.html
+- https://docs.confluent.io/cloud/current/multi-cloud/cluster-linking/index.html#share-data-with-cluster-linking-on-ccloud
+- https://docs.confluent.io/platform/current/multi-dc-deployments/cluster-linking/mirror-topics-cp.html#mirror-topics-for-cluster-linking
