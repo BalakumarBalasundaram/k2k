@@ -137,6 +137,15 @@ Next, you might want to learn how to manage these alerts or how to integrate the
 //TODO
 
 
+## Testing
+
+### Find latency of cluser linking
+
+* This test helps to measure average end-to-end latency of a messages sent from one Cluster via Cluster Linking to another Kafka Cluster.
+
+* Producer --> Cluster1 ---cluster-link---> Cluster2 --> Consumer
+
+* Each message is given a timestamp by the producer. Latency is computed by the consumer by subtracting the producer timestamp from the current time.
 
 ## Further Reading
 
